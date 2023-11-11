@@ -2,6 +2,8 @@
 {
     [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт позиций")]
+    [Description("Экспорт позиций из таблицы Позиции.\r\n" +
+        "Работает только при подключенном поставщике.")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
     [OutputsCount(1)]
@@ -16,7 +18,7 @@
         public ISecurity Execute(ISecurity sec)
         {
             var ds = sec?.SecurityDescription?.TradePlace?.DataSource as IPortfolioSourceBase;
-            if (ds == null)
+            if (ds == null || ds.ConnectionState != DSConnectionState.Connected)
                 return sec;
 
             var sb = new StringBuilder();
@@ -58,7 +60,7 @@
                     sb.Append(b.AssessedPrice.Round(decimals)).Append(Delimeter);
                     sb.Append(b.Balance.Round(decimals)).Append(Delimeter);
                     sb.Append(b.ProfitVolume.Round(decimals)).Append(Delimeter);
-                    sb.Append(DateTime.Now).Append(Delimeter);
+                    sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
                     sb.AppendLine();
                 }
             }
