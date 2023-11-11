@@ -2,10 +2,26 @@
 {
     public static class SystemUtils
     {
-        public const string Handler = "AVozyakov";
+        public const string HandlerName = "AVozyakov";
         public const string FolderGoogle = "AVozyakov_Google";
         public const string FileGoogle = "ExportToGoogle.exe";
 
+        public static string FolderHandles { get; } =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TSLab\TSLab 2.0\Handlers");
+        
+        private static readonly TimeZoneInfo _tmzMsc = TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time");
+
+        /// <summary>
+        /// Московское время
+        /// </summary>
+        public static DateTime GetTimeMsc()
+        {
+            return TimeZoneInfo.ConvertTime(DateTime.UtcNow, _tmzMsc);
+        }
+
+        /// <summary>
+        /// Запустить exe файл
+        /// </summary>
         public static void RunProcess(string fileName, string args, out string output, out string error)
         {
             if (!File.Exists(fileName))

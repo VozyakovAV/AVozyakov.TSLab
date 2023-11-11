@@ -1,6 +1,6 @@
 ﻿namespace AVozyakov
 {
-    [HandlerCategory($"{SystemUtils.Handler}.Export")]
+    [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт агентов")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
@@ -10,7 +10,7 @@
     {
         private const char Delimeter = ';';
 
-        [HandlerParameter(true, @"C:\\Temp\\TSLab\\Agents.csv", NotOptimized = true)]
+        [HandlerParameter(true, @"C:\\TSLab\\Agents.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         public ISecurity Execute(ISecurity sec)
@@ -38,25 +38,17 @@
                 sb.Append(item.DataSource.Name).Append(Delimeter);
                 sb.Append(item.Account.Name).Append(Delimeter);
                 sb.Append(item.Security.Name).Append(Delimeter);
-                sb.Append(GetValue(item.Balance, decimals)).Append(Delimeter);
-                sb.Append(GetValue(item.Current, lotDecimals)).Append(Delimeter);
-                sb.Append(GetValue(item.CalculatedBalance, lotDecimals)).Append(Delimeter);
-                sb.Append(GetValue(item.ManualTradePosition, lotDecimals)).Append(Delimeter);
-                sb.Append(GetValue(item.Divergence, lotDecimals)).Append(Delimeter);
-                sb.Append(DateTime.Now).Append(Delimeter);
+                sb.Append(item.Balance.Round(decimals)).Append(Delimeter);
+                sb.Append(item.Current.Round(lotDecimals)).Append(Delimeter);
+                sb.Append(item.CalculatedBalance.Round(lotDecimals)).Append(Delimeter);
+                sb.Append(item.ManualTradePosition.Round(lotDecimals)).Append(Delimeter);
+                sb.Append(item.Divergence.Round(lotDecimals)).Append(Delimeter);
+                sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
                 sb.AppendLine();
             }
 
             File.WriteAllText(FileName, sb.ToString(), Encoding.GetEncoding(1251));
-
             return sec;
-        }
-
-        private static decimal? GetValue(double? value, int decimals)
-        {
-            if (value == null)
-                return null;
-            return (decimal)Math.Round(value.Value, decimals);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace AVozyakov
 {
-    [HandlerCategory($"{SystemUtils.Handler}.Export")]
+    [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт счета")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
@@ -10,7 +10,7 @@
     {
         private const char Delimeter = ';';
 
-        [HandlerParameter(true, @"C:\\Temp\\TSLab\\Balance.csv", NotOptimized = true)]
+        [HandlerParameter(true, @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         [HandlerParameter(Name = "Интервал записи (мин)", Default = @"1440", NotOptimized = true)]
@@ -35,7 +35,6 @@
             sb.AppendLine();
 
             File.WriteAllText(FileName, sb.ToString(), Encoding.GetEncoding(1251));
-
             return sec;
         }
     }

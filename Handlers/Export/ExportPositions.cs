@@ -1,6 +1,6 @@
 ﻿namespace AVozyakov
 {
-    [HandlerCategory($"{SystemUtils.Handler}.Export")]
+    [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт позиций")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
@@ -10,7 +10,7 @@
     {
         private const char Delimeter = ';';
 
-        [HandlerParameter(true, @"C:\\Temp\\TSLab\\Positions.csv", NotOptimized = true)]
+        [HandlerParameter(true, @"C:\\TSLab\\Positions.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         public ISecurity Execute(ISecurity sec)
@@ -51,28 +51,20 @@
                     sb.Append(b.TradePlaceName).Append(Delimeter);
                     sb.Append(b.SecurityName).Append(Delimeter);
                     sb.Append(b.Security.Currency).Append(Delimeter);
-                    sb.Append(GetValue(b.IncomeRest, lotDecimals)).Append(Delimeter);
-                    sb.Append(GetValue(b.RealRest, lotDecimals)).Append(Delimeter);
-                    sb.Append(GetValue(b.PlanRest, lotDecimals)).Append(Delimeter);
-                    sb.Append(GetValue(b.BalancePrice, decimals)).Append(Delimeter);
-                    sb.Append(GetValue(b.AssessedPrice, decimals)).Append(Delimeter);
-                    sb.Append(GetValue(b.Balance, decimals)).Append(Delimeter);
-                    sb.Append(GetValue(b.ProfitVolume, decimals)).Append(Delimeter);
+                    sb.Append(b.IncomeRest.Round(lotDecimals)).Append(Delimeter);
+                    sb.Append(b.RealRest.Round(lotDecimals)).Append(Delimeter);
+                    sb.Append(b.PlanRest.Round(lotDecimals)).Append(Delimeter);
+                    sb.Append(b.BalancePrice.Round(decimals)).Append(Delimeter);
+                    sb.Append(b.AssessedPrice.Round(decimals)).Append(Delimeter);
+                    sb.Append(b.Balance.Round(decimals)).Append(Delimeter);
+                    sb.Append(b.ProfitVolume.Round(decimals)).Append(Delimeter);
                     sb.Append(DateTime.Now).Append(Delimeter);
                     sb.AppendLine();
                 }
             }
 
             File.WriteAllText(FileName, sb.ToString(), Encoding.GetEncoding(1251));
-
             return sec;
-        }
-
-        private static decimal? GetValue(double? value, int decimals)
-        {
-            if (value == null)
-                return null;
-            return (decimal)Math.Round(value.Value, decimals);
         }
     }
 }

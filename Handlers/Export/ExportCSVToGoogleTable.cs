@@ -1,7 +1,7 @@
 ﻿namespace AVozyakov
 {
-    [HandlerCategory($"{SystemUtils.Handler}.Export")]
-    [HandlerName("Экспорт CSV в Google таблицу")]
+    [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
+    [HandlerName("Экспорт в Google таблицу")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
     [OutputsCount(1)]
@@ -30,9 +30,7 @@
         {
             try
             {
-                var fileName = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    @"TSLab\TSLab 2.0\Handlers", SystemUtils.FolderGoogle, SystemUtils.FileGoogle);
+                var fileName = Path.Combine(SystemUtils.FolderHandles, SystemUtils.FolderGoogle, SystemUtils.FileGoogle);
                 var args = $@"/cmd:append /fileSource:{FileSource} /table:{SpreadSheetId} /sheet:{SheetName} /fileGoogle:{FileGoogle}";
 
                 SystemUtils.RunProcess(fileName, args, out var output, out var error);
