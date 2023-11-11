@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="GoogleSheetsHelper\**" />
+    <EmbeddedResource Remove="GoogleSheetsHelper\**" />
+    <None Remove="GoogleSheetsHelper\**" />
+    <None Remove="build.bat" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DynamicData" Version="8.1.1" />
   </ItemGroup>
 
