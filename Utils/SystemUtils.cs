@@ -45,5 +45,18 @@
             error = process.StandardError.ReadToEnd();
             process.WaitForExit();
         }
+
+        /// <summary>
+        /// Проверка на частое срабатываение
+        /// </summary>
+        public static bool CanExecuteByTime(string variableId, int seconds)
+        {
+            _prevExecutedDate.TryGetValue(variableId, out var dateTime);
+            if (DateTime.Now < dateTime.AddSeconds(seconds))
+                return false;
+            _prevExecutedDate[variableId] = DateTime.Now;
+            return true;
+        }
+        private static readonly ConcurrentDictionary<string, DateTime> _prevExecutedDate = new();
     }
 }

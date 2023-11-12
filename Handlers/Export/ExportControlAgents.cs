@@ -6,15 +6,19 @@
     [Input(0, TemplateTypes.SECURITY)]
     [OutputsCount(1)]
     [OutputType(TemplateTypes.SECURITY)]
-    public class ExportControlAgents : IStreamHandler
+    public class ExportControlAgents : IStreamHandler, INeedVariableId
     {
         private const char Delimeter = ';';
+        public string VariableId { get; set; }
 
         [HandlerParameter(Name = "Файл", Default = @"C:\\TSLab\\ControlAgents.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         public ISecurity Execute(ISecurity sec)
         {
+            if (!SystemUtils.CanExecuteByTime(VariableId, 5))
+                return sec;
+
             var service = Locator.Current.GetInstance<IAgentTradingService>();
             if (service == null)
                 return sec;

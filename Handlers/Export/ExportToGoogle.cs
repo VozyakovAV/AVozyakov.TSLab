@@ -5,8 +5,11 @@
     [Input(0, TemplateTypes.SECURITY)]
     [OutputsCount(1)]
     [OutputType(TemplateTypes.SECURITY)]
-    public abstract class ExportToGoogle : IStreamHandler, IContextUses
+    public abstract class ExportToGoogle : IStreamHandler, INeedVariableId, IContextUses
     {
+        public string VariableId { get; set; }
+        public IContext Context { get; set; }
+
         [HandlerParameter(Name = "Файл данных", Default = @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
         [Description("Файл с данными (csv)")]
         public string FileSource { get; set; }
@@ -23,12 +26,13 @@
         [Description("Название листа")]
         public string SheetName { get; set; }
 
-        public IContext Context { get; set; }
-
         protected abstract string Command { get; }
 
         public ISecurity Execute(ISecurity sec)
         {
+            if (!SystemUtils.CanExecuteByTime(VariableId, 5))
+                return sec;
+
             try
             {
                 var fileName = Path.Combine(SystemUtils.FolderHandles, SystemUtils.FolderGoogle, SystemUtils.FileGoogle);
@@ -39,7 +43,7 @@
                 if (!string.IsNullOrEmpty(output))
                     Context.Log(output, MessageType.Info);
                 if (!string.IsNullOrEmpty(error))
-                    Context.Log(error, MessageType.Error);
+                    Context.Log(error, MessageType.Error, toMessageWindow: true);
             }
             catch (Exception ex)
             {

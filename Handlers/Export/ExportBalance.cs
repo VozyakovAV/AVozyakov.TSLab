@@ -10,9 +10,10 @@
     [Input(0, TemplateTypes.SECURITY)]
     [OutputsCount(1)]
     [OutputType(TemplateTypes.SECURITY)]
-    public class ExportBalance : IStreamHandler
+    public class ExportBalance : IStreamHandler, INeedVariableId
     {
         private const char Delimeter = ';';
+        public string VariableId { get; set; }
 
         [HandlerParameter(Name = "Файл", Default = @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
         public string FileName { get; set; }
@@ -22,6 +23,9 @@
 
         public ISecurity Execute(ISecurity sec)
         {
+            if (!SystemUtils.CanExecuteByTime(VariableId, 5))
+                return sec;
+
             var ds = sec.GetPortfolioSource();
             if (ds == null || ds.ConnectionState != DSConnectionState.Connected)
                 return sec;
