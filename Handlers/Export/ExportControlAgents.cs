@@ -10,7 +10,7 @@
     {
         private const char Delimeter = ';';
 
-        [HandlerParameter(true, @"C:\\TSLab\\ControlAgents.csv", NotOptimized = true)]
+        [HandlerParameter(Name = "Файл", Default = @"C:\\TSLab\\ControlAgents.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         public ISecurity Execute(ISecurity sec)

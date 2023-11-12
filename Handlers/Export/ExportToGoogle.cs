@@ -7,12 +7,12 @@
     [OutputType(TemplateTypes.SECURITY)]
     public abstract class ExportToGoogle : IStreamHandler, IContextUses
     {
-        [HandlerParameter(Name = "Файл CSV", Default = @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
-        [Description("Файл CSV с данными")]
+        [HandlerParameter(Name = "Файл данных", Default = @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
+        [Description("Файл с данными (csv)")]
         public string FileSource { get; set; }
 
         [HandlerParameter(Name = "Файл google настроек", Default = @"C:\\TSLab\\google_client.json", NotOptimized = true)]
-        [Description("Файл настроек google api")]
+        [Description("Файл настроек google api (json)")]
         public string FileGoogle { get; set; }
 
         [HandlerParameter(Name = "Id таблицы", Default = @"1_T-ENPjpjhfEiVmoSNpYZDrhfEpiwCFNeuPyNNwL2uI", NotOptimized = true)]

@@ -12,7 +12,7 @@
     {
         private const char Delimeter = ';';
 
-        [HandlerParameter(true, @"C:\\TSLab\\Moneys.csv", NotOptimized = true)]
+        [HandlerParameter(Name = "Файл", Default = @"C:\\TSLab\\Moneys.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         public ISecurity Execute(ISecurity sec)
@@ -26,7 +26,6 @@
             sb.Append("Поставщик").Append(Delimeter);
             sb.Append("Валюта").Append(Delimeter);
             sb.Append("Счет").Append(Delimeter);
-            sb.Append("Инструмент").Append(Delimeter);
 
             sb.Append("Входящая").Append(Delimeter);
             sb.Append("Текущая").Append(Delimeter);
@@ -47,7 +46,6 @@
                     sb.Append(ds.Name).Append(Delimeter);
                     sb.Append(b.Security.Currency).Append(Delimeter);
                     sb.Append(b.AccountName).Append(Delimeter);
-                    sb.Append(b.SecurityName).Append(Delimeter);
 
                     sb.Append(b.IncomeRest.Round(decimals)).Append(Delimeter);
                     sb.Append(b.RealRest.Round(decimals)).Append(Delimeter);

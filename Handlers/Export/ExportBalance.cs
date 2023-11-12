@@ -14,7 +14,7 @@
     {
         private const char Delimeter = ';';
 
-        [HandlerParameter(true, @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
+        [HandlerParameter(Name = "Файл", Default = @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
         public string FileName { get; set; }
 
         [HandlerParameter(Name = "Округление времени (мин)", Default = @"1440", NotOptimized = true)]
