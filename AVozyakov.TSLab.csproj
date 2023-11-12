@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="GoogleSheetsHelper\**" />
+    <Compile Remove="out\**" />
     <EmbeddedResource Remove="GoogleSheetsHelper\**" />
+    <EmbeddedResource Remove="out\**" />
     <None Remove="GoogleSheetsHelper\**" />
+    <None Remove="out\**" />
     <None Remove="build.bat" />
   </ItemGroup>
 

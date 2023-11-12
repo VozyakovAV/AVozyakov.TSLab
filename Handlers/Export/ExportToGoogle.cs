@@ -1,13 +1,11 @@
 ﻿namespace AVozyakov
 {
     [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
-    [HandlerName("Экспорт в Google таблицу")]
-    [Description("Экспорт в Google таблицу из CSV файла")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
     [OutputsCount(1)]
     [OutputType(TemplateTypes.SECURITY)]
-    public class ExportCSVToGoogleTable : IStreamHandler, IContextUses
+    public abstract class ExportToGoogle : IStreamHandler, IContextUses
     {
         [HandlerParameter(Name = "Файл CSV", Default = @"C:\\TSLab\\Balance.csv", NotOptimized = true)]
         [Description("Файл CSV с данными")]
@@ -27,12 +25,14 @@
 
         public IContext Context { get; set; }
 
+        protected abstract string Command { get; }
+
         public ISecurity Execute(ISecurity sec)
         {
             try
             {
                 var fileName = Path.Combine(SystemUtils.FolderHandles, SystemUtils.FolderGoogle, SystemUtils.FileGoogle);
-                var args = $@"/cmd:append /fileSource:{FileSource} /table:{TableId} /sheet:{SheetName} /fileGoogle:{FileGoogle}";
+                var args = $@"/cmd:{Command} /fileSource:{FileSource} /table:{TableId} /sheet:{SheetName} /fileGoogle:{FileGoogle}";
 
                 SystemUtils.RunProcess(fileName, args, out var output, out var error);
 
@@ -48,5 +48,20 @@
 
             return sec;
         }
+    }
+
+    [HandlerName("Экспорт в Google таблицу (добавить)")]
+    [Description("Добавить в Google таблицу данные из файла")]
+    public class ExportToGoogleAppend : ExportToGoogle
+    {
+        protected override string Command => "append";
+    }
+
+    [HandlerName("Экспорт в Google таблицу (обновить)")]
+    [Description("Обновить в Google таблице данные из файла.\r\n" +
+        "Внимание! Перед записью очищает весь лист!")]
+    public class ExportToGoogleUpdate : ExportToGoogle
+    {
+        protected override string Command => "update";
     }
 }
