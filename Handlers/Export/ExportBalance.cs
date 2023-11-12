@@ -4,7 +4,7 @@
     [HandlerName("Экспорт баланса")]
     [Description("Экспорт баланса в Google таблицу.\r\n" +
         "Время пишет московское, округляет ее до указанного значения.\r\n" +
-        "Например, сейчас 12:05, округление времени 60 минут, тогда в таблицу запишется 12:00.\r\n" +
+        "Например, сейчас 12:05, округление времени 1440 минут (1 день), тогда в таблицу запишется 00:00.\r\n" +
         "Работает только при подключенном поставщике.")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
@@ -22,7 +22,7 @@
 
         public ISecurity Execute(ISecurity sec)
         {
-            var ds = sec?.SecurityDescription?.TradePlace?.DataSource as IPortfolioSourceBase;
+            var ds = sec.GetPortfolioSource();
             if (ds == null || ds.ConnectionState != DSConnectionState.Connected)
                 return sec;
             

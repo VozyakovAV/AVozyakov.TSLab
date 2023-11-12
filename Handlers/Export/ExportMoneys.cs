@@ -17,20 +17,20 @@
 
         public ISecurity Execute(ISecurity sec)
         {
-            var ds = sec?.SecurityDescription?.TradePlace?.DataSource as IPortfolioSourceBase;
+            var ds = sec.GetPortfolioSource();
             if (ds == null || ds.ConnectionState != DSConnectionState.Connected)
                 return sec;
 
             var sb = new StringBuilder();
+            sb.Append("Время").Append(Delimeter);
             sb.Append("Поставщик").Append(Delimeter);
-            sb.Append("Счет").Append(Delimeter);
-            sb.Append("Рынок").Append(Delimeter);
-            sb.Append("Инструмент").Append(Delimeter);
             sb.Append("Валюта").Append(Delimeter);
+            sb.Append("Счет").Append(Delimeter);
+            sb.Append("Инструмент").Append(Delimeter);
+
             sb.Append("Входящая").Append(Delimeter);
             sb.Append("Текущая").Append(Delimeter);
             sb.Append("Плановая").Append(Delimeter);
-            sb.Append("UpdateTime").Append(Delimeter);
             sb.AppendLine();
 
             foreach (var account in ds.Accounts)
@@ -43,15 +43,15 @@
                 foreach (var b in balances)
                 {
                     var decimals = b.Security.Decimals;
+                    sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
                     sb.Append(ds.Name).Append(Delimeter);
-                    sb.Append(b.AccountName).Append(Delimeter);
-                    sb.Append(b.TradePlaceName).Append(Delimeter);
-                    sb.Append(b.SecurityName).Append(Delimeter);
                     sb.Append(b.Security.Currency).Append(Delimeter);
+                    sb.Append(b.AccountName).Append(Delimeter);
+                    sb.Append(b.SecurityName).Append(Delimeter);
+
                     sb.Append(b.IncomeRest.Round(decimals)).Append(Delimeter);
                     sb.Append(b.RealRest.Round(decimals)).Append(Delimeter);
                     sb.Append(b.PlanRest.Round(decimals)).Append(Delimeter);
-                    sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
                     sb.AppendLine();
                 }
             }
