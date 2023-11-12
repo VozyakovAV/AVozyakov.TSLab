@@ -3,7 +3,7 @@
     [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт баланса")]
     [Description("Экспорт баланса в Google таблицу.\r\n" +
-        "Время пишет московское, округляет ее до указанного значения.\r\n" +
+        "Время округляет до указанного значения.\r\n" +
         "Например, сейчас 12:05, округление времени 1440 минут (1 день), тогда в таблицу запишется 00:00.\r\n" +
         "Работает только при подключенном поставщике.")]
     [InputsCount(1)]
@@ -38,8 +38,7 @@
             sb.Append("Доступно").Append(Delimeter);
             sb.AppendLine();
 
-            var time = SystemUtils.GetTimeMsc().RoundDown(TimeSpan.FromMinutes(IntervalMin));
-            sb.Append(time).Append(Delimeter);
+            sb.Append(DateTime.Now.RoundDown(TimeSpan.FromMinutes(IntervalMin))).Append(Delimeter);
             sb.Append(accountInfo.FullBalance).Append(Delimeter);
             sb.Append(accountInfo.AvailableBalance).Append(Delimeter);
             sb.AppendLine();

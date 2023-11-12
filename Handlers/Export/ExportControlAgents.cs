@@ -36,7 +36,7 @@
             {
                 var decimals = item.Security.BalanceDecimals;
                 var lotDecimals = item.Security.LotTick.GetDecimalPlaces();
-                sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
+                sb.Append(DateTime.Now).Append(Delimeter);
                 sb.Append(item.DataSource.Name).Append(Delimeter);
                 sb.Append(item.Account.Name).Append(Delimeter);
                 sb.Append(item.Security.Name).Append(Delimeter);

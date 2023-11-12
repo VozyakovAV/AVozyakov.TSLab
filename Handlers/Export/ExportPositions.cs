@@ -56,7 +56,7 @@
 
                     var decimals = b.Security.BalanceDecimals;
                     var lotDecimals = b.Security.LotTick.GetDecimalPlaces();
-                    sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
+                    sb.Append(DateTime.Now).Append(Delimeter);
 
                     sb.Append(ds.Name).Append(Delimeter);
                     sb.Append(b.Security.Currency).Append(Delimeter);

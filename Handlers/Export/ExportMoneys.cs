@@ -42,7 +42,7 @@
                 foreach (var b in balances)
                 {
                     var decimals = b.Security.Decimals;
-                    sb.Append(SystemUtils.GetTimeMsc()).Append(Delimeter);
+                    sb.Append(DateTime.Now).Append(Delimeter);
                     sb.Append(ds.Name).Append(Delimeter);
                     sb.Append(b.Security.Currency).Append(Delimeter);
                     sb.Append(b.AccountName).Append(Delimeter);
