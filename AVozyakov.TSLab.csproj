@@ -33,9 +33,6 @@
     <Reference Include="TSLab.Script.Handlers">
       <HintPath>C:\Program Files\TSLab\TSLab 2.2\TSLab.Script.Handlers.dll</HintPath>
     </Reference>
-    <Reference Include="TSLab.TradeDataModel">
-      <HintPath>C:\Program Files\TSLab\TSLab 2.2\TSLab.TradeDataModel.dll</HintPath>
-    </Reference>
     <Reference Include="TSLab.Utility">
       <HintPath>C:\Program Files\TSLab\TSLab 2.2\TSLab.Utility.dll</HintPath>
     </Reference>

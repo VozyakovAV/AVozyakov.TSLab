@@ -58,7 +58,7 @@
                 }
             }
 
-            File.WriteAllText(FileName, sb.ToString(), Encoding.GetEncoding(1251));
+            FileUtils.WriteAllText(FileName, sb.ToString(), Encoding.GetEncoding(1251));
             return sec;
         }
     }
