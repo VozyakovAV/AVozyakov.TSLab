@@ -33,12 +33,23 @@
             if (!SystemUtils.CanExecuteByTime(VariableId, 5))
                 return sec;
 
+            var ds = sec.GetPortfolioSource();
+            if (ds == null || ds.ConnectionState != DSConnectionState.Connected)
+                return sec;
+
             try
             {
                 var fileName = Path.Combine(SystemUtils.FolderHandles, SystemUtils.FolderGoogle, SystemUtils.FileGoogle);
                 var args = $@"/cmd:{Command} /fileSource:{FileSource} /table:{TableId} /sheet:{SheetName} /fileGoogle:{FileGoogle}";
 
-                SystemUtils.RunProcess(fileName, args, out var output, out var error);
+                string output = null;
+                string error = null;
+                for (int i = 0; i < 3; i++)
+                {
+                    SystemUtils.RunProcess(fileName, args, out output, out error);
+                    if (string.IsNullOrEmpty(error))
+                        break;
+                }
 
                 if (!string.IsNullOrEmpty(output))
                     Context.Log(output, MessageType.Info);
