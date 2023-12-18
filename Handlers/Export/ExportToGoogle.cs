@@ -46,9 +46,17 @@
                 string error = null;
                 for (int i = 0; i < 3; i++)
                 {
-                    SystemUtils.RunProcess(fileName, args, out output, out error);
-                    if (string.IsNullOrEmpty(error))
-                        break;
+                    try
+                    {
+                        
+                        SystemUtils.RunProcess(fileName, args, out output, out error);
+                        if (string.IsNullOrEmpty(error))
+                            break;
+                    }
+                    finally
+                    {
+                        Context.Log($"Run {fileName} {args}: output={output}, error={error}");
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(output))
