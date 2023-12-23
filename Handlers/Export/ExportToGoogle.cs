@@ -49,7 +49,7 @@
                     try
                     {
                         
-                        SystemUtils.RunProcess(fileName, args, out output, out error);
+                        SystemUtils.RunProcess(fileName, args, 40000, out output, out error);
                         if (string.IsNullOrEmpty(error))
                             break;
                     }

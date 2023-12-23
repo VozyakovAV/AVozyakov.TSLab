@@ -22,7 +22,7 @@
         /// <summary>
         /// Запустить exe файл
         /// </summary>
-        public static void RunProcess(string fileName, string args, out string output, out string error)
+        public static void RunProcess(string fileName, string args, int timeoutMs, out string output, out string error)
         {
             if (!File.Exists(fileName))
                 throw new FileNotFoundException(fileName);
@@ -41,9 +41,20 @@
             };
 
             process.Start();
+            process.WaitForExit(timeoutMs);
+
+            var isKilled = false;
+            if (!process.HasExited)
+            {
+                process.Kill(true);
+                isKilled = true;
+            }
+
             output = process.StandardOutput.ReadToEnd();
             error = process.StandardError.ReadToEnd();
-            process.WaitForExit();
+
+            if (isKilled)
+                error += $"Killed by timeout {timeoutMs}";
         }
 
         /// <summary>
