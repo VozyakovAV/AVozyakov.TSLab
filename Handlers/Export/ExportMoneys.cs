@@ -2,7 +2,7 @@
 {
     [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт денег")]
-    [Description("Экспорт денег из таблицы Позиции.\r\n" +
+    [Description("Экспорт денег из таблицы Позиции в файл.\r\n" +
         "Работает только при подключенном поставщике.")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]

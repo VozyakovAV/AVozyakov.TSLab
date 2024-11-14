@@ -2,7 +2,7 @@
 {
     [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт позиций")]
-    [Description("Экспорт позиций из таблицы Позиции.\r\n" +
+    [Description("Экспорт позиций из таблицы Позиции в файл.\r\n" +
         "Работает только при подключенном поставщике.")]
     [InputsCount(1)]
     [Input(0, TemplateTypes.SECURITY)]
