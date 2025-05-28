@@ -76,5 +76,19 @@
                 File.WriteAllText(path, contents, encoding);
             }
         }
+
+        public static void WriteAllLines<T>(string path, IEnumerable<T> lines)
+        {
+            IEnumerable<string> contents = lines.Select((T x) => x.ToString());
+            try
+            {
+                File.WriteAllLines(path, contents);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                CreateFolderForFile(path);
+                File.WriteAllLines(path, contents);
+            }
+        }
     }
 }
