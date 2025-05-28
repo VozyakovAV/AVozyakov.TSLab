@@ -64,6 +64,9 @@
                 if (!string.IsNullOrEmpty(error))
                     Context.Log(error, MessageType.Error, toMessageWindow: true);
             }
+            catch (TaskCanceledException)
+            {
+            }
             catch (Exception ex)
             {
                 Context.Log(ex.ToString(), MessageType.Error);

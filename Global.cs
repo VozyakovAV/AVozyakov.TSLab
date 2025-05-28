@@ -1,4 +1,5 @@
-﻿global using System.Collections.Concurrent;
+﻿global using AVozyakov.Utils;
+global using System.Collections.Concurrent;
 global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Text;

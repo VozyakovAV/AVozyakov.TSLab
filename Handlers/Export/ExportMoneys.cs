@@ -1,4 +1,4 @@
-﻿namespace AVozyakov
+﻿namespace AVozyakov.Handlers.Export
 {
     [HandlerCategory($"{SystemUtils.HandlerName}.Export")]
     [HandlerName("Экспорт денег")]

@@ -1,4 +1,4 @@
-﻿namespace AVozyakov
+﻿namespace AVozyakov.Utils
 {
     public static class SystemUtils
     {
